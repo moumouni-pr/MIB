@@ -1,0 +1,12 @@
+{
+  "name": "mib-gaming",
+  "private": true,
+  "description": "Site web de MIB GAMING — la référence en terme de Gaming",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.2"
+  }
+}

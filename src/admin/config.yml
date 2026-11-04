@@ -1,0 +1,113 @@
+# Espace admin MIB GAMING (Decap CMS) — accessible sur https://VOTRE-SITE/admin/
+backend:
+  name: github
+  repo: moumouni-pr/mib-gaming
+  branch: main
+  commit_messages:
+    create: "Ajout : {{slug}}"
+    update: "Modification : {{slug}}"
+    delete: "Suppression : {{slug}}"
+    uploadMedia: "Ajout image : {{path}}"
+    deleteMedia: "Suppression image : {{path}}"
+
+locale: fr
+site_url: https://mibgaming.com
+logo_url: /assets/img/logo-wide.png
+media_folder: src/assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: produits
+    label: Produits
+    label_singular: Produit
+    folder: src/produits
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    summary: "{{title}} — {{prix}} FCFA"
+    sortable_fields: [ordre, title, prix]
+    fields:
+      - { label: "Nom du produit", name: title, widget: string }
+      - label: "Catégorie"
+        name: categorie
+        widget: select
+        options: [Consoles, Accessoires, Jeux, "Cartes cadeaux", "PC Gaming", Occasion]
+      - { label: "Prix (FCFA)", name: prix, widget: number, value_type: int, min: 0 }
+      - { label: "Ancien prix barré (optionnel, pour les promos)", name: ancien_prix, widget: number, value_type: int, required: false }
+      - label: "Étiquette"
+        name: badge
+        widget: select
+        required: false
+        options: ["", Nouveau, Promo, Best-seller, "Stock limité"]
+      - { label: "Photo du produit", name: image, widget: image, required: false, hint: "Photo carrée ou 4:3 de préférence, fond clair." }
+      - label: "Icône (si pas de photo)"
+        name: icone
+        widget: select
+        default: console
+        options:
+          - { label: "Console de salon", value: console }
+          - { label: "Console portable", value: portable }
+          - { label: "Manette", value: manette }
+          - { label: "Casque", value: casque }
+          - { label: "Jeu", value: jeu }
+          - { label: "Carte cadeau", value: carte }
+      - { label: "Marque", name: marque, widget: string, required: false }
+      - { label: "En stock", name: en_stock, widget: boolean, default: true }
+      - { label: "Publié sur le site", name: publie, widget: boolean, default: true }
+      - { label: "Ordre d'affichage (1 = en premier)", name: ordre, widget: number, value_type: int, default: 50 }
+      - { label: "Résumé (1 phrase, affichée sur la carte et sur Google)", name: resume, widget: string }
+      - { label: "Description détaillée", name: body, widget: markdown }
+
+  - name: articles
+    label: Articles (Actualités)
+    label_singular: Article
+    folder: src/blog
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: md
+    summary: "{{title}} ({{year}}-{{month}}-{{day}})"
+    sortable_fields: [date, title]
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - { label: "Date de publication", name: date, widget: datetime, date_format: "DD/MM/YYYY", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Résumé (affiché sur Google et dans la liste)", name: resume, widget: text }
+      - { label: "Image principale", name: image, widget: image, required: false }
+      - { label: "Publié", name: publie, widget: boolean, default: true }
+      - { label: "Contenu de l'article", name: body, widget: markdown }
+
+  - name: parametres
+    label: Paramètres de la boutique
+    editor: { preview: false }
+    files:
+      - name: site
+        label: Infos de la boutique
+        file: src/_data/site.json
+        fields:
+          - { label: "Nom de la boutique", name: nom, widget: string }
+          - { label: "Slogan", name: slogan, widget: string }
+          - { label: "Adresse du site (domaine)", name: url, widget: string, hint: "Ex : https://mibgaming.com — sans / à la fin" }
+          - { label: "Ville", name: ville, widget: string }
+          - { label: "Pays", name: pays, widget: string }
+          - { label: "Code pays (2 lettres)", name: code_pays, widget: string, hint: "ML = Mali, SN = Sénégal, CI = Côte d'Ivoire, BF = Burkina Faso…" }
+          - { label: "Description pour Google (150 caractères env.)", name: description, widget: text }
+          - { label: "Phrase d'accroche (page d'accueil)", name: accroche, widget: text }
+          - { label: "Présentation de la boutique", name: presentation, widget: text }
+          - { label: "Numéro WhatsApp (international, sans + ni espaces)", name: whatsapp, widget: string, hint: "Ex : 22370123456" }
+          - { label: "Téléphone affiché", name: telephone, widget: string }
+          - { label: "E-mail", name: email, widget: string }
+          - { label: "Adresse de la boutique", name: adresse, widget: string }
+          - { label: "Horaires (affichés)", name: horaires, widget: string }
+          - { label: "Horaires pour Google", name: horaires_google, widget: list, hint: "Format : Mo-Sa 09:00-20:00 (Mo Tu We Th Fr Sa Su)" }
+          - { label: "Lien Google Maps", name: lien_carte, widget: string }
+          - { label: "Devise affichée", name: devise, widget: string }
+          - { label: "Code devise ISO", name: devise_iso, widget: string, hint: "XOF pour le franc CFA" }
+          - { label: "Page Facebook", name: facebook, widget: string, required: false }
+          - { label: "Instagram", name: instagram, widget: string, required: false }
+          - { label: "TikTok", name: tiktok, widget: string, required: false }
+          - { label: "YouTube", name: youtube, widget: string, required: false }
+          - label: "Chiffres clés (accueil)"
+            name: chiffres
+            widget: list
+            fields:
+              - { label: Valeur, name: valeur, widget: string }
+              - { label: Texte, name: texte, widget: string }

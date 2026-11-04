@@ -1,0 +1,156 @@
+{%- set pageTitle = (title + " | " + site.nom) if title else (site.nom + " — " + site.slogan + " | Consoles & jeux vidéo à " + site.ville) -%}
+{%- set pageDesc = description or resume or site.description -%}
+{%- set pageImage = (image | absolute(site.url)) if image else ("/assets/img/og-image.png" | absolute(site.url)) -%}
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDesc }}">
+<link rel="canonical" href="{{ page.url | absolute(site.url) }}">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#232f62">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:site_name" content="{{ site.nom }}">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:type" content="{{ ogType or 'website' }}">
+<meta property="og:title" content="{{ pageTitle }}">
+<meta property="og:description" content="{{ pageDesc }}">
+<meta property="og:url" content="{{ page.url | absolute(site.url) }}">
+<meta property="og:image" content="{{ pageImage }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "@id": "{{ site.url }}/#boutique",
+  "name": {{ site.nom | json | safe }},
+  "alternateName": ["MIB Gaming", "MIBGAMING", "MIB"],
+  "slogan": {{ site.slogan | json | safe }},
+  "description": {{ site.description | json | safe }},
+  "url": "{{ site.url }}/",
+  "logo": "{{ '/assets/img/logo.png' | absolute(site.url) }}",
+  "image": "{{ '/assets/img/og-image.png' | absolute(site.url) }}",
+  "telephone": {{ site.telephone | json | safe }},
+  "email": {{ site.email | json | safe }},
+  "priceRange": "$$",
+  "currenciesAccepted": "{{ site.devise_iso }}",
+  "paymentAccepted": "Espèces, Mobile Money",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ site.adresse | json | safe }},
+    "addressLocality": {{ site.ville | json | safe }},
+    "addressCountry": "{{ site.code_pays }}"
+  },
+  "openingHours": {{ site.horaires_google | json | safe }},
+  "hasMap": {{ site.lien_carte | json | safe }}
+  {%- set reseaux = [] -%}
+  {%- for r in [site.facebook, site.instagram, site.tiktok, site.youtube] -%}{%- if r -%}{%- set reseaux = (reseaux.push(r), reseaux) -%}{%- endif -%}{%- endfor -%}
+  {%- if reseaux.length %},
+  "sameAs": {{ reseaux | json | safe }}{% endif %}
+}
+</script>
+{% block head %}{% endblock %}
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="{{ site.nom }} — accueil">
+      <img src="/assets/img/logo-wide.png" alt="Logo {{ site.nom }}" width="62" height="22">
+      <span>{{ site.nom }}</span>
+    </a>
+    <nav class="links" id="menu">
+      <a href="/">Accueil</a>
+      <a href="/boutique/">Boutique</a>
+      <a href="/blog/">Actualités</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-btn" type="button" onclick="openCart()" aria-label="Ouvrir le panier">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        <span class="cart-label">Panier</span> <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="burger" type="button" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+{{ content | safe }}
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <img src="/assets/img/logo-white.png" alt="{{ site.nom }}" width="80" height="29">
+      <p class="foot-slogan">{{ site.slogan }}</p>
+      <p class="foot-muted">Consoles, accessoires et jeux vidéo à {{ site.ville }}.</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="/boutique/">Boutique</a>
+      <a href="/blog/">Actualités</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>{{ site.adresse }}, {{ site.ville }}</p>
+      <p>{{ site.telephone }}</p>
+      <p>{{ site.horaires }}</p>
+    </div>
+    <div>
+      <h4>Suivez-nous</h4>
+      {% if site.facebook %}<a href="{{ site.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+      {% if site.instagram %}<a href="{{ site.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+      {% if site.tiktok %}<a href="{{ site.tiktok }}" target="_blank" rel="noopener">TikTok</a>{% endif %}
+      {% if site.youtube %}<a href="{{ site.youtube }}" target="_blank" rel="noopener">YouTube</a>{% endif %}
+      <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© <span id="year"></span> {{ site.nom }} — Tous droits réservés</span>
+    <span>Paiement à la livraison ou en boutique</span>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Bonjour ' + site.nom + ', j\'ai une question :') | urlencode }}" target="_blank" rel="noopener" aria-label="Nous écrire sur WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5 0-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Panier">
+  <div class="d-head"><h3>Votre panier</h3><button class="x" type="button" onclick="closeCart()" aria-label="Fermer">✕</button></div>
+  <div class="d-body" id="cartItems"></div>
+  <div class="d-foot" id="cartFoot">
+    <div class="total"><span>Total</span><span id="cartTotal">0</span></div>
+    <form id="orderForm">
+      <input required name="nom" placeholder="Votre nom complet" autocomplete="name">
+      <input required name="tel" type="tel" placeholder="Votre numéro de téléphone" autocomplete="tel">
+      <select name="mode" id="mode">
+        <option value="Livraison">Livraison à domicile</option>
+        <option value="Retrait en boutique">Retrait en boutique</option>
+      </select>
+      <input name="adresse" id="adresse" placeholder="Adresse de livraison (quartier, repère…)">
+      <textarea name="note" rows="2" placeholder="Remarque (optionnel)"></textarea>
+      <button class="btn btn-wa full" type="submit">Commander sur WhatsApp</button>
+    </form>
+  </div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+  window.BOUTIQUE = {{ { nom: site.nom, whatsapp: site.whatsapp, devise: site.devise } | json | safe }};
+  window.PRODUITS = {{ collections.produits | catalogue | json | safe }};
+</script>
+<script src="/assets/js/cart.js"></script>
+</body>
+</html>

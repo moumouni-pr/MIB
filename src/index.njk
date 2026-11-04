@@ -1,0 +1,79 @@
+---
+layout: base.njk
+---
+{% from "macros.njk" import carte, articleCarte %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag">{{ site.slogan }}</span>
+      <h1>{{ site.nom }}<br><span>Le gaming, sans compromis.</span></h1>
+      <p class="lead">{{ site.accroche }}</p>
+      <div class="btns">
+        <a href="/boutique/" class="btn btn-dark">Voir la boutique →</a>
+        <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" class="btn btn-light">Nous écrire sur WhatsApp</a>
+      </div>
+      <div class="stats">
+        {% for c in site.chiffres %}<div><b>{{ c.valeur }}</b><small>{{ c.texte }}</small></div>{% endfor %}
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="/assets/img/logo.png" alt="Logo {{ site.nom }}" width="256" height="256" class="hero-logo">
+      <span class="float f1">🎮 Nouveautés chaque semaine</span>
+      <span class="float f2">✅ Produits garantis</span>
+    </div>
+  </div>
+</section>
+
+<section class="soft">
+  <div class="wrap">
+    <div class="head">
+      <div><h2>Produits du moment</h2><p class="sub">Ajoutez au panier, puis envoyez votre commande sur WhatsApp.</p></div>
+      <a href="/boutique/" class="btn btn-light">Tout voir →</a>
+    </div>
+    <div class="grid">
+      {% for p in collections.produits | limit(8) %}{{ carte(p, site) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head"><div><h2>Pourquoi choisir {{ site.nom }}</h2><p class="sub">Une boutique de passionnés, pour les passionnés.</p></div></div>
+    <div class="features">
+      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>100% authentique</h3><p>Uniquement des produits neufs et officiels, avec facture.</p></div>
+      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="14" height="10" rx="1"/><path d="M15 10h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><h3>Livraison rapide</h3><p>Livré chez vous en 24h à {{ site.ville }}, ou retrait en boutique.</p></div>
+      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Garantie & SAV</h3><p>Chaque console est garantie. On s'occupe de tout en cas de souci.</p></div>
+      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1-5A8 8 0 1 1 21 12z"/></svg></div><h3>Conseil personnalisé</h3><p>Une question ? On vous répond directement sur WhatsApp.</p></div>
+    </div>
+  </div>
+</section>
+
+{% if collections.articles.length %}
+<section class="soft">
+  <div class="wrap">
+    <div class="head">
+      <div><h2>Actualités gaming</h2><p class="sub">Nouveautés, arrivages et conseils de l'équipe {{ site.nom }}.</p></div>
+      <a href="/blog/" class="btn btn-light">Tous les articles →</a>
+    </div>
+    <div class="posts">{% for a in collections.articles | limit(3) %}{{ articleCarte(a) }}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+
+<section id="contact">
+  <div class="wrap about">
+    <div>
+      <h2>Venez nous rendre visite</h2>
+      <p class="sub">{{ site.presentation }}</p>
+      <div class="btns" style="margin-top:28px">
+        <a href="{{ site.lien_carte }}" target="_blank" rel="noopener" class="btn btn-dark">Voir l'itinéraire</a>
+        <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" class="btn btn-wa">WhatsApp</a>
+      </div>
+    </div>
+    <div class="about-box">
+      <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><p><small>Adresse</small>{{ site.adresse }}, {{ site.ville }}</p></div>
+      <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p><small>Horaires</small>{{ site.horaires }}</p></div>
+      <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><p><small>Téléphone / WhatsApp</small>{{ site.telephone }}</p></div>
+    </div>
+  </div>
+</section>

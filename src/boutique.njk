@@ -1,0 +1,24 @@
+---
+layout: base.njk
+title: Boutique — Consoles, manettes et jeux vidéo
+description: Découvrez tous les produits MIB GAMING — PS5, Xbox, Nintendo Switch, manettes, casques et jeux vidéo. Commande rapide sur WhatsApp.
+permalink: /boutique/
+---
+{% from "macros.njk" import carte %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>La boutique</h1>
+    <p class="sub">Tous nos produits, neufs et garantis. Ajoutez au panier puis commandez sur WhatsApp.</p>
+    <div class="filters" id="filters">
+      <button class="chip on" type="button" data-c="Tous">Tous</button>
+      {% for c in collections.produits | categories %}<button class="chip" type="button" data-c="{{ c }}">{{ c }}</button>{% endfor %}
+    </div>
+  </div>
+</section>
+<section class="soft tight">
+  <div class="wrap">
+    <div class="grid" id="grid">
+      {% for p in collections.produits %}{{ carte(p, site) }}{% endfor %}
+    </div>
+  </div>
+</section>

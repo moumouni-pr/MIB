@@ -1,0 +1,20 @@
+---
+layout: base.njk
+title: Actualités gaming
+description: Les actualités, nouveautés, arrivages et conseils gaming de MIB GAMING.
+permalink: /blog/
+---
+{% from "macros.njk" import articleCarte %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>Actualités</h1>
+    <p class="sub">Nouveautés, arrivages, promos et conseils de l'équipe {{ site.nom }}.</p>
+  </div>
+</section>
+<section class="soft tight">
+  <div class="wrap">
+    {% if collections.articles.length %}
+    <div class="posts">{% for a in collections.articles %}{{ articleCarte(a) }}{% endfor %}</div>
+    {% else %}<p class="sub">Aucun article pour le moment.</p>{% endif %}
+  </div>
+</section>

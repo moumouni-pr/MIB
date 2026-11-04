@@ -1,0 +1,30 @@
+---
+layout: base.njk
+---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ title | json | safe }},
+  "description": {{ resume | json | safe }},
+  "datePublished": "{{ page.date | isoDate }}",
+  {% if image %}"image": "{{ image | absolute(site.url) }}",{% endif %}
+  "author": { "@type": "Organization", "name": {{ site.nom | json | safe }} },
+  "publisher": { "@id": "{{ site.url }}/#boutique" },
+  "mainEntityOfPage": "{{ page.url | absolute(site.url) }}"
+}
+</script>
+<article class="article">
+  <div class="wrap narrow">
+    <nav class="crumbs"><a href="/">Accueil</a> / <a href="/blog/">Actualités</a></nav>
+    <time datetime="{{ page.date | isoDate }}">{{ page.date | dateFr }}</time>
+    <h1>{{ title }}</h1>
+    {% if resume %}<p class="lead">{{ resume }}</p>{% endif %}
+    {% if image %}<img src="{{ image }}" alt="{{ title }}" class="article-img">{% endif %}
+    <div class="prose">{{ content | safe }}</div>
+    <div class="article-cta">
+      <div><b>Envie de vous équiper ?</b><p>Découvrez nos consoles et jeux, ou posez-nous vos questions.</p></div>
+      <div class="btns"><a href="/boutique/" class="btn btn-dark">Voir la boutique</a><a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" class="btn btn-wa">WhatsApp</a></div>
+    </div>
+  </div>
+</article>

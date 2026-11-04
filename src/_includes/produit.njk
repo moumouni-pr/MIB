@@ -1,0 +1,55 @@
+---
+layout: base.njk
+---
+{% from "macros.njk" import visuel, carte %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ title | json | safe }},
+  "description": {{ resume | json | safe }},
+  "category": {{ categorie | json | safe }},
+  {% if image %}"image": "{{ image | absolute(site.url) }}",{% endif %}
+  "brand": { "@type": "Brand", "name": {{ (marque or site.nom) | json | safe }} },
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ prix }}",
+    "priceCurrency": "{{ site.devise_iso }}",
+    "availability": "https://schema.org/{{ 'InStock' if en_stock != false else 'OutOfStock' }}",
+    "url": "{{ page.url | absolute(site.url) }}",
+    "seller": { "@id": "{{ site.url }}/#boutique" }
+  }
+}
+</script>
+<section class="product">
+  <div class="wrap">
+    <nav class="crumbs"><a href="/">Accueil</a> / <a href="/boutique/">Boutique</a> / <span>{{ title }}</span></nav>
+    <div class="product-grid">
+      <div class="product-img">
+        {% if badge %}<span class="badge {{ 'promo' if badge == 'Promo' }}">{{ badge }}</span>{% endif %}
+        {{ visuel({ image: image, icone: icone }, title) }}
+      </div>
+      <div>
+        <span class="cat">{{ categorie }}</span>
+        <h1 class="product-title">{{ title }}</h1>
+        <div class="product-price">{{ prix | prix(site.devise) }}{% if ancien_prix %}<span class="old">{{ ancien_prix | prix(site.devise) }}</span>{% endif %}</div>
+        <p class="stock {{ 'no' if en_stock == false }}">{{ 'En stock' if en_stock != false else 'Rupture de stock — contactez-nous' }}</p>
+        <p class="sub">{{ resume }}</p>
+        <div class="btns" style="margin:24px 0">
+          {% if en_stock != false %}<button type="button" class="btn btn-dark" onclick="addToCart('{{ page.fileSlug }}'); openCart()">Ajouter au panier</button>{% endif %}
+          <a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Bonjour ' + site.nom + ', je suis intéressé(e) par : ' + title + ' (' + (prix | prix(site.devise)) + ')') | urlencode }}">Commander sur WhatsApp</a>
+        </div>
+        <div class="prose">{{ content | safe }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="soft">
+  <div class="wrap">
+    <div class="head"><h2>Vous aimerez aussi</h2></div>
+    <div class="grid">
+      {% set n = 0 %}
+      {% for p in collections.produits %}{% if p.url != page.url and p.data.categorie == categorie and n < 4 %}{{ carte(p, site) }}{% set n = n + 1 %}{% endif %}{% endfor %}
+    </div>
+  </div>
+</section>

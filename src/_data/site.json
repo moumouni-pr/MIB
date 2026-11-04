@@ -1,0 +1,29 @@
+{
+  "nom": "MIB GAMING",
+  "slogan": "La référence en terme de Gaming",
+  "url": "https://mibgaming.com",
+  "ville": "Bamako",
+  "pays": "Mali",
+  "code_pays": "ML",
+  "description": "MIB GAMING, la référence en terme de Gaming : consoles PS5, Xbox, Nintendo Switch, manettes, accessoires et jeux vidéo neufs et garantis. Commandez en ligne et faites-vous livrer rapidement.",
+  "accroche": "Consoles, manettes, accessoires et jeux vidéo neufs et garantis. Choisissez vos produits, envoyez votre commande sur WhatsApp, on s'occupe du reste.",
+  "presentation": "MIB GAMING est le rendez-vous des gamers. Venez tester les dernières consoles, demander conseil à notre équipe de passionnés et repartir avec votre jeu préféré — ou faites-vous livrer directement à la maison.",
+  "whatsapp": "22300000000",
+  "telephone": "+223 00 00 00 00",
+  "email": "contact@mibgaming.com",
+  "adresse": "Avenue de l'Indépendance, à côté de la pharmacie centrale",
+  "horaires": "Lun – Sam : 9h – 20h · Dim : 15h – 20h",
+  "horaires_google": ["Mo-Sa 09:00-20:00", "Su 15:00-20:00"],
+  "lien_carte": "https://maps.google.com/?q=MIB+GAMING",
+  "devise": "FCFA",
+  "devise_iso": "XOF",
+  "facebook": "",
+  "instagram": "",
+  "tiktok": "",
+  "youtube": "",
+  "chiffres": [
+    { "valeur": "500+", "texte": "clients satisfaits" },
+    { "valeur": "100%", "texte": "produits authentiques" },
+    { "valeur": "24h", "texte": "livraison en ville" }
+  ]
+}
