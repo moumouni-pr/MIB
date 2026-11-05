@@ -44,7 +44,7 @@
   "paymentAccepted": "Espèces, Mobile Money",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": {{ site.adresse | json | safe }},
+    {% if site.adresse %}"streetAddress": {{ site.adresse | json | safe }},{% endif %}
     "addressLocality": {{ site.ville | json | safe }},
     "addressCountry": "{{ site.code_pays }}"
   },
@@ -103,7 +103,7 @@
     </div>
     <div>
       <h4>Contact</h4>
-      <p>{{ site.adresse }}, {{ site.ville }}</p>
+      <p>{{ (site.adresse + ", ") if site.adresse }}{{ site.ville }}, {{ site.pays }} — <a href="{{ site.lien_carte }}" target="_blank" rel="noopener" style="display:inline;text-decoration:underline">voir la carte</a></p>
       <p>{{ site.telephone }}</p>
       <p>{{ site.horaires }}</p>
     </div>

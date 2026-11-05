@@ -11,13 +11,12 @@
   "whatsapp": "22799162683",
   "telephone": "+227 99 16 26 83",
   "email": "contact@mibgaming.com",
-  "adresse": "Avenue de l'Indépendance, à côté de la pharmacie centrale",
-  "horaires": "Lun – Sam : 9h – 20h · Dim : 15h – 20h",
+  "adresse": "",
+  "horaires": "Ouvert 7j/7 : 9h – 21h",
   "horaires_google": [
-    "Mo-Sa 09:00-20:00",
-    "Su 15:00-20:00"
+    "Mo-Su 09:00-21:00"
   ],
-  "lien_carte": "https://maps.google.com/?q=MIB+GAMING",
+  "lien_carte": "https://maps.app.goo.gl/YJWpeoSxFXicXsPh9",
   "devise": "FCFA",
   "devise_iso": "XOF",
   "facebook": "",
