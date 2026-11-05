@@ -1,7 +1,7 @@
 # Espace admin MIB GAMING (Decap CMS) — accessible sur https://VOTRE-SITE/admin/
 backend:
   name: github
-  repo: moumouni-pr/mib-gaming
+  repo: moumouni-pr/MIB01
   branch: main
   commit_messages:
     create: "Ajout : {{slug}}"
