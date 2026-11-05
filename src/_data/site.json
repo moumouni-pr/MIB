@@ -39,31 +39,31 @@
   ],
   "bannieres": [
     {
-      "etiquette": "Nouveauté",
-      "titre": "Nintendo Switch 2 disponible",
-      "texte": "Grand écran, nouveaux Joy-Con, et tous vos jeux en mode portable ou sur la télé.",
-      "bouton": "Je la veux",
-      "lien": "/produits/nintendo-switch-2/",
-      "image": "",
-      "style": "bleu"
-    },
-    {
       "etiquette": "Best-seller",
-      "titre": "PlayStation 5 : en stock à Niamey",
-      "texte": "PS5 Slim et Digital neuves et garanties, livrées chez vous en 24h.",
-      "bouton": "Voir les PS5",
-      "lien": "/boutique/?cat=Consoles",
+      "titre": "Manette DualSense Camouflage",
+      "texte": "La manette officielle PS5 au look unique, neuve et livrée rapidement à Niamey.",
+      "bouton": "Je la veux",
+      "lien": "/produits/manette-dualsense-ps5-camouflage/",
       "image": "",
       "style": "marine"
     },
     {
-      "etiquette": "🔥 Promos",
-      "titre": "Jusqu'à -15% sur une sélection",
-      "texte": "Casques, consoles et accessoires à prix réduit, dans la limite des stocks.",
-      "bouton": "Voir les promos",
-      "lien": "/boutique/?cat=promo",
+      "etiquette": "MIB GAMING",
+      "titre": "La référence en terme de Gaming",
+      "texte": "Consoles, manettes, accessoires et jeux vidéo neufs et garantis, à Niamey.",
+      "bouton": "Voir la boutique",
+      "lien": "/boutique/",
       "image": "",
-      "style": "rouge"
+      "style": "bleu"
+    },
+    {
+      "etiquette": "📱 Paiement facile",
+      "titre": "Payez par MyNita ou Amana",
+      "texte": "Ou à la livraison. Commandez en 2 minutes et recevez votre produit chez vous.",
+      "bouton": "Commander",
+      "lien": "/boutique/",
+      "image": "",
+      "style": "noir"
     }
   ],
   "marques": [

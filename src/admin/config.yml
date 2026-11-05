@@ -39,7 +39,8 @@ collections:
         widget: select
         required: false
         options: ["", Nouveau, Promo, Best-seller, "Stock limité"]
-      - { label: "Photo du produit", name: image, widget: image, required: false, hint: "Photo carrée ou 4:3 de préférence, fond clair." }
+      - { label: "Photo principale", name: image, widget: image, required: false, hint: "Photo carrée de préférence, fond blanc ou clair." }
+      - { label: "Autres photos (galerie)", name: galerie, widget: list, required: false, field: { label: Photo, name: photo, widget: image } }
       - label: "Icône (si pas de photo)"
         name: icone
         widget: select

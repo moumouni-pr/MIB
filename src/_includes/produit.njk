@@ -9,7 +9,7 @@ layout: base.njk
   "name": {{ title | json | safe }},
   "description": {{ resume | json | safe }},
   "category": {{ categorie | json | safe }},
-  {% if image %}"image": "{{ image | absolute(site.url) }}",{% endif %}
+  {% if image %}"image": [{{ (image | absolute(site.url)) | json | safe }}{% for g in galerie %}, {{ (g | absolute(site.url)) | json | safe }}{% endfor %}],{% endif %}
   "brand": { "@type": "Brand", "name": {{ (marque or site.nom) | json | safe }} },
   "offers": {
     "@type": "Offer",
@@ -25,9 +25,17 @@ layout: base.njk
   <div class="wrap">
     <nav class="crumbs"><a href="/">Accueil</a> / <a href="/boutique/">Boutique</a> / <span>{{ title }}</span></nav>
     <div class="product-grid">
-      <div class="product-img">
-        {% if badge %}<span class="badge {{ 'promo' if badge == 'Promo' }}">{{ badge }}</span>{% endif %}
-        {{ visuel({ image: image, icone: icone }, title) }}
+      <div class="gallery">
+        <div class="product-img">
+          {% set rm = prix | remise(ancien_prix) %}
+          {% if rm %}<span class="badge promo">-{{ rm }}%</span>{% elif badge %}<span class="badge">{{ badge }}</span>{% endif %}
+          {% if image %}<img src="{{ image }}" alt="{{ title }}" id="mainPhoto">{% else %}{{ visuel({ image: image, icone: icone }, title) }}{% endif %}
+        </div>
+        {% if image and galerie and galerie.length %}
+        <div class="thumbs" id="thumbs">
+          {% for g in [image].concat(galerie) %}<button type="button" class="{{ 'on' if loop.first }}" data-src="{{ g }}"><img src="{{ g }}" alt="{{ title }} — photo {{ loop.index }}" loading="lazy"></button>{% endfor %}
+        </div>
+        {% endif %}
       </div>
       <div>
         <span class="cat">{{ categorie }}</span>
@@ -44,12 +52,15 @@ layout: base.njk
     </div>
   </div>
 </section>
-<section class="soft">
+{% set similaires = [] %}
+{% for p in collections.produits %}{% if p.url != page.url and similaires.length < 5 %}{% set similaires = (similaires.push(p), similaires) %}{% endif %}{% endfor %}
+{% if similaires.length %}
+<section class="mk-sec last">
   <div class="wrap">
-    <div class="head"><h2>Vous aimerez aussi</h2></div>
-    <div class="grid">
-      {% set n = 0 %}
-      {% for p in collections.produits %}{% if p.url != page.url and p.data.categorie == categorie and n < 4 %}{{ carte(p, site) }}{% set n = n + 1 %}{% endif %}{% endfor %}
+    <div class="mk-box">
+      <div class="mk-head"><h2>Vous aimerez aussi</h2><a href="/boutique/">Voir la boutique →</a></div>
+      <div class="grid g5">{% for p in similaires %}{{ carte(p, site) }}{% endfor %}</div>
     </div>
   </div>
 </section>
+{% endif %}

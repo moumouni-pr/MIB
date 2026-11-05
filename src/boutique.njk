@@ -22,7 +22,7 @@ permalink: /boutique/
     <div class="filters" id="filters">
       <button class="chip on" type="button" data-c="Tous">Tous</button>
       {% for c in collections.produits | categories %}<button class="chip" type="button" data-c="{{ c }}">{{ c }}</button>{% endfor %}
-      <button class="chip" type="button" data-c="promo">🔥 Promos</button>
+      {% if (collections.produits | promos).length %}<button class="chip" type="button" data-c="promo">🔥 Promos</button>{% endif %}
     </div>
   </div>
 </section>

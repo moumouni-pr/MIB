@@ -158,6 +158,14 @@
     $("#searchWa").href = waLink(`Bonjour ${B.nom}, je cherche : ${q}`);
   }
 
+  /* ---------- Galerie produit ---------- */
+  const thumbs = $("#thumbs");
+  if (thumbs) thumbs.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-src]"); if (!b) return;
+    $("#mainPhoto").src = b.dataset.src;
+    thumbs.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
+  });
+
   let tt;
   function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => el.classList.remove("show"), 1800); }
 

@@ -378,3 +378,12 @@ body{background:var(--bg-soft)}
   .g5 .add{width:34px;height:34px}
   .trust-grid{grid-template-columns:1fr 1fr}
 }
+/* photos produits : fond blanc, produit entier visible */
+.thumb:has(img),.product-img:has(img){background:#fff}
+.thumb img,.product-img img{object-fit:contain}
+.gallery{display:grid;gap:12px}
+.thumbs{display:flex;gap:10px;flex-wrap:wrap}
+.thumbs button{width:76px;height:76px;border:2px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;padding:2px}
+.thumbs button.on{border-color:var(--blue)}
+.thumbs img{width:100%;height:100%;object-fit:contain}
+.mk-deal-ic img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff}

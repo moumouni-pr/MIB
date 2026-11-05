@@ -12,7 +12,7 @@ layout: base.njk
       {% for c in cats %}
       <a href="/boutique/?cat={{ c | urlencode }}"><span class="mk-side-ic">{{ icone(icCat[c] or "console") }}</span>{{ c }}<small>{{ collections.produits | compte(c) }}</small></a>
       {% endfor %}
-      <a href="/boutique/?cat=promo" class="hot"><span class="mk-side-ic">🔥</span>Promos<small>{{ (collections.produits | promos).length }}</small></a>
+      {% if (collections.produits | promos).length %}<a href="/boutique/?cat=promo" class="hot"><span class="mk-side-ic">🔥</span>Promos<small>{{ (collections.produits | promos).length }}</small></a>{% endif %}
     </aside>
 
     <div class="slider" id="slider">
@@ -35,12 +35,13 @@ layout: base.njk
         <img src="/assets/img/logo.png" alt="Logo {{ site.nom }}" width="64" height="64">
         <div><b>Bienvenue chez {{ site.nom }}</b><small>{{ site.slogan }}</small></div>
       </div>
-      {% set promo = (collections.produits | promos)[0] %}
+      {% set promo = (collections.produits | promos)[0] or collections.produits[0] %}
       {% if promo %}
+      {% set rmp = promo.data.prix | remise(promo.data.ancien_prix) %}
       <a href="{{ promo.url }}" class="mk-deal">
-        <span class="badge promo">-{{ promo.data.prix | remise(promo.data.ancien_prix) }}%</span>
-        <div class="mk-deal-ic">{{ icone(promo.data.icone) }}</div>
-        <div><small>Offre du moment</small><b>{{ promo.data.title }}</b><span class="price">{{ promo.data.prix | prix(site.devise) }}</span></div>
+        {% if rmp %}<span class="badge promo">-{{ rmp }}%</span>{% endif %}
+        <div class="mk-deal-ic">{% if promo.data.image %}<img src="{{ promo.data.image }}" alt="{{ promo.data.title }}">{% else %}{{ icone(promo.data.icone) }}{% endif %}</div>
+        <div><small>{{ "Offre du moment" if rmp else "À la une" }}</small><b>{{ promo.data.title }}</b><span class="price">{{ promo.data.prix | prix(site.devise) }}</span></div>
       </a>
       {% endif %}
       <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" class="mk-help">
