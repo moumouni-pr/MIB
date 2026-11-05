@@ -38,7 +38,7 @@
   "logo": "{{ '/assets/img/logo.png' | absolute(site.url) }}",
   "image": "{{ '/assets/img/og-image.png' | absolute(site.url) }}",
   "telephone": {{ site.telephone | json | safe }},
-  "email": {{ site.email | json | safe }},
+  {% if site.email %}"email": {{ site.email | json | safe }},{% endif %}
   "priceRange": "$$",
   "currenciesAccepted": "{{ site.devise_iso }}",
   "paymentAccepted": "Espèces, Mobile Money",

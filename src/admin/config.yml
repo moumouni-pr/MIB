@@ -11,7 +11,7 @@ backend:
     deleteMedia: "Suppression image : {{path}}"
 
 locale: fr
-site_url: https://mibgaming.com
+site_url: https://mibgaming.netlify.app
 logo_url: /assets/img/logo-wide.png
 media_folder: src/assets/uploads
 public_folder: /assets/uploads
