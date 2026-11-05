@@ -48,11 +48,11 @@
       "style": "marine"
     },
     {
-      "etiquette": "MIB GAMING",
-      "titre": "La référence en terme de Gaming",
-      "texte": "Consoles, manettes, accessoires et jeux vidéo neufs et garantis, à Niamey.",
-      "bouton": "Voir la boutique",
-      "lien": "/boutique/",
+      "etiquette": "Consoles",
+      "titre": "PS4 Slim & Nintendo Switch disponibles",
+      "texte": "Des consoles prêtes à jouer, livrées rapidement à Niamey. Paiement MyNita, Amana ou à la livraison.",
+      "bouton": "Voir les consoles",
+      "lien": "/boutique/?cat=Consoles",
       "image": "",
       "style": "bleu"
     },

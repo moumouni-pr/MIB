@@ -11,7 +11,7 @@ galerie:
 marque: "Sony PlayStation"
 en_stock: true
 publie: true
-ordre: 1
+ordre: 3
 resume: "Manette officielle Sony DualSense pour PS5, édition Camouflage Gris. Neuve en boîte, disponible à Niamey avec livraison rapide."
 ---
 
