@@ -60,28 +60,45 @@
 </head>
 <body>
 
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <span>🚚 Livraison 24h à {{ site.ville }}</span>
+    <span class="hide-sm">✅ Produits neufs et garantis</span>
+    <span class="hide-sm">🕘 {{ site.horaires }}</span>
+    <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener">📞 {{ site.telephone }}</a>
+  </div>
+</div>
 <header class="top">
   <div class="wrap nav">
     <a href="/" class="logo" aria-label="{{ site.nom }} — accueil">
       <img src="/assets/img/logo-wide.png" alt="Logo {{ site.nom }}" width="62" height="22">
       <span>{{ site.nom }}</span>
     </a>
-    <nav class="links" id="menu">
-      <a href="/">Accueil</a>
-      <a href="/boutique/">Boutique</a>
-      <a href="/blog/">Actualités</a>
-      <a href="/#contact">Contact</a>
-    </nav>
+    <form class="search" action="/recherche/" method="get" role="search">
+      <select name="cat" aria-label="Catégorie">
+        <option value="">Toutes catégories</option>
+        {% for c in collections.produits | categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+      </select>
+      <input type="search" name="q" placeholder="Rechercher une console, un jeu, une manette…" aria-label="Rechercher">
+      <button type="submit" aria-label="Rechercher"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="hide-sm">Rechercher</span></button>
+    </form>
     <div class="nav-right">
+      <a class="nav-ico hide-sm" href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1-5A8 8 0 1 1 21 12z"/></svg><span>Aide</span></a>
       <button class="cart-btn" type="button" onclick="openCart()" aria-label="Ouvrir le panier">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
         <span class="cart-label">Panier</span> <span class="cart-count" id="cartCount">0</span>
       </button>
-      <button class="burger" type="button" aria-label="Menu" onclick="document.getElementById('menu').classList.toggle('open')">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
     </div>
   </div>
+  <nav class="catbar" aria-label="Catégories">
+    <div class="wrap catbar-in">
+      <a href="/boutique/" class="catbar-all"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Toutes les catégories</a>
+      {% for c in collections.produits | categories %}<a href="/boutique/?cat={{ c | urlencode }}">{{ c }}</a>{% endfor %}
+      <a href="/boutique/?cat=promo" class="hot">🔥 Promos</a>
+      <a href="/blog/">Actualités</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </nav>
 </header>
 
 <main>
@@ -135,11 +152,20 @@
     <form id="orderForm">
       <input required name="nom" placeholder="Votre nom complet" autocomplete="name">
       <input required name="tel" type="tel" placeholder="Votre numéro de téléphone" autocomplete="tel">
-      <select name="mode" id="mode">
-        <option value="Livraison">Livraison à domicile</option>
-        <option value="Retrait en boutique">Retrait en boutique</option>
+      <select name="mode" id="mode" aria-label="Livraison">
+        <option value="Livraison">🚚 Livraison à domicile</option>
+        <option value="Retrait en boutique">🏬 Retrait en boutique</option>
       </select>
       <input name="adresse" id="adresse" placeholder="Adresse de livraison (quartier, repère…)">
+      <fieldset class="pay">
+        <legend>Mode de paiement</legend>
+        {% for m in site.paiements %}
+        <label><input type="radio" name="paiement" value="{{ m.nom }}" {{ 'checked' if loop.first }}> <b>{{ m.nom }}</b></label>
+        {% endfor %}
+        {% if site.paiement_livraison %}<label><input type="radio" name="paiement" value="À la livraison / en boutique" {{ 'checked' if not site.paiements.length }}> <b>À la livraison</b></label>{% endif %}
+      </fieldset>
+      <div class="pay-box" id="payBox"></div>
+      <input name="transaction" id="transaction" placeholder="Référence de la transaction (après paiement)">
       <textarea name="note" rows="2" placeholder="Remarque (optionnel)"></textarea>
       <button class="btn btn-wa full" type="submit">Commander sur WhatsApp</button>
     </form>
@@ -148,7 +174,8 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  window.BOUTIQUE = {{ { nom: site.nom, whatsapp: site.whatsapp, devise: site.devise } | json | safe }};
+  window.BOUTIQUE = {{ { nom: site.nom, whatsapp: site.whatsapp, devise: site.devise, paiements: site.paiements } | json | safe }};
+  window.ICONES = {{ icones | json | safe }};
   window.PRODUITS = {{ collections.produits | catalogue | json | safe }};
 </script>
 <script src="/assets/js/cart.js"></script>

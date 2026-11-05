@@ -36,5 +36,59 @@
       "valeur": "24h",
       "texte": "livraison en ville"
     }
-  ]
+  ],
+  "bannieres": [
+    {
+      "etiquette": "Nouveauté",
+      "titre": "Nintendo Switch 2 disponible",
+      "texte": "Grand écran, nouveaux Joy-Con, et tous vos jeux en mode portable ou sur la télé.",
+      "bouton": "Je la veux",
+      "lien": "/produits/nintendo-switch-2/",
+      "image": "",
+      "style": "bleu"
+    },
+    {
+      "etiquette": "Best-seller",
+      "titre": "PlayStation 5 : en stock à Niamey",
+      "texte": "PS5 Slim et Digital neuves et garanties, livrées chez vous en 24h.",
+      "bouton": "Voir les PS5",
+      "lien": "/boutique/?cat=Consoles",
+      "image": "",
+      "style": "marine"
+    },
+    {
+      "etiquette": "🔥 Promos",
+      "titre": "Jusqu'à -15% sur une sélection",
+      "texte": "Casques, consoles et accessoires à prix réduit, dans la limite des stocks.",
+      "bouton": "Voir les promos",
+      "lien": "/boutique/?cat=promo",
+      "image": "",
+      "style": "rouge"
+    }
+  ],
+  "marques": [
+    "PlayStation",
+    "Xbox",
+    "Nintendo",
+    "EA Sports",
+    "Ubisoft",
+    "Logitech",
+    "Razer",
+    "SteelSeries"
+  ],
+  "paiements": [
+    {
+      "nom": "MyNita",
+      "numero": "+227 99 16 26 83",
+      "titulaire": "MIB GAMING",
+      "consigne": "Ouvrez l'application MyNita, faites un dépôt/transfert du montant total vers ce numéro, puis notez la référence de la transaction."
+    },
+    {
+      "nom": "Amana",
+      "numero": "+227 99 16 26 83",
+      "titulaire": "MIB GAMING",
+      "consigne": "Ouvrez l'application Amana, envoyez le montant total vers ce numéro, puis notez la référence de la transaction."
+    }
+  ],
+  "paiement_livraison": true
 }

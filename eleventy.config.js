@@ -28,7 +28,13 @@ export default function (eleventyConfig) {
       id: p.fileSlug, nom: p.data.title, cat: p.data.categorie, prix: p.data.prix,
       ancien: p.data.ancien_prix || 0, badge: p.data.badge || "", image: p.data.image || "",
       icone: p.data.icone || "console", url: p.url, stock: p.data.en_stock !== false,
+      resume: p.data.resume || "", marque: p.data.marque || "",
     })));
+
+  eleventyConfig.addFilter("remise", (prix, ancien) => ancien && ancien > prix ? Math.round((1 - prix / ancien) * 100) : 0);
+  eleventyConfig.addFilter("promos", (items) => items.filter((p) => p.data.ancien_prix && p.data.ancien_prix > p.data.prix));
+  eleventyConfig.addFilter("parCategorie", (items, cat) => items.filter((p) => p.data.categorie === cat));
+  eleventyConfig.addFilter("compte", (items, cat) => items.filter((p) => p.data.categorie === cat).length);
 
   return {
     dir: { input: "src", includes: "_includes", data: "_data", output: "_site" },

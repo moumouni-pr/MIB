@@ -105,6 +105,29 @@ collections:
           - { label: "Instagram", name: instagram, widget: string, required: false }
           - { label: "TikTok", name: tiktok, widget: string, required: false }
           - { label: "YouTube", name: youtube, widget: string, required: false }
+          - label: "Bannières de l'accueil (diaporama)"
+            name: bannieres
+            widget: list
+            summary: "{{fields.titre}}"
+            fields:
+              - { label: "Petite étiquette", name: etiquette, widget: string, required: false }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: string }
+              - { label: "Texte du bouton", name: bouton, widget: string }
+              - { label: "Lien du bouton", name: lien, widget: string, hint: "Ex : /produits/playstation-5-slim/ ou /boutique/?cat=Consoles" }
+              - { label: "Image (optionnel)", name: image, widget: image, required: false }
+              - { label: Couleur, name: style, widget: select, options: [bleu, marine, rouge, noir], default: bleu }
+          - { label: "Marques affichées", name: marques, widget: list }
+          - label: "Moyens de paiement (MyNita, Amana…)"
+            name: paiements
+            widget: list
+            summary: "{{fields.nom}} — {{fields.numero}}"
+            fields:
+              - { label: "Nom (ex : MyNita)", name: nom, widget: string }
+              - { label: "Numéro qui reçoit l'argent", name: numero, widget: string }
+              - { label: "Nom du titulaire du compte", name: titulaire, widget: string }
+              - { label: "Consigne pour le client", name: consigne, widget: text }
+          - { label: "Accepter le paiement à la livraison", name: paiement_livraison, widget: boolean, default: true }
           - label: "Chiffres clés (accueil)"
             name: chiffres
             widget: list

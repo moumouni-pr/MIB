@@ -1,24 +1,36 @@
 ---
 layout: base.njk
-title: Boutique — Consoles, manettes et jeux vidéo
-description: Découvrez tous les produits MIB GAMING — PS5, Xbox, Nintendo Switch, manettes, casques et jeux vidéo. Commande rapide sur WhatsApp.
+title: Boutique — Consoles, manettes et jeux vidéo à Niamey
+description: Tous les produits MIB GAMING — PS5, Xbox, Nintendo Switch, manettes, casques et jeux vidéo neufs. Paiement MyNita, Amana ou à la livraison.
 permalink: /boutique/
 ---
 {% from "macros.njk" import carte %}
-<section class="page-head">
+<section class="mk-sec first">
   <div class="wrap">
-    <h1>La boutique</h1>
-    <p class="sub">Tous nos produits, neufs et garantis. Ajoutez au panier puis commandez sur WhatsApp.</p>
+    <nav class="crumbs"><a href="/">Accueil</a> / <span id="crumbCat">Boutique</span></nav>
+    <div class="shop-bar">
+      <div><h1 class="shop-title" id="shopTitle">Toute la boutique</h1><p class="sub" id="shopCount">{{ collections.produits.length }} produits</p></div>
+      <label class="sort">Trier :
+        <select id="sort">
+          <option value="defaut">Recommandés</option>
+          <option value="prix-asc">Prix croissant</option>
+          <option value="prix-desc">Prix décroissant</option>
+          <option value="remise">Meilleures promos</option>
+        </select>
+      </label>
+    </div>
     <div class="filters" id="filters">
       <button class="chip on" type="button" data-c="Tous">Tous</button>
       {% for c in collections.produits | categories %}<button class="chip" type="button" data-c="{{ c }}">{{ c }}</button>{% endfor %}
+      <button class="chip" type="button" data-c="promo">🔥 Promos</button>
     </div>
   </div>
 </section>
-<section class="soft tight">
+<section class="mk-sec">
   <div class="wrap">
-    <div class="grid" id="grid">
+    <div class="grid g5" id="grid">
       {% for p in collections.produits %}{{ carte(p, site) }}{% endfor %}
     </div>
+    <p class="empty" id="noResult" hidden>Aucun produit dans cette catégorie pour le moment.</p>
   </div>
 </section>

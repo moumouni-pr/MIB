@@ -1,70 +1,134 @@
 ---
 layout: base.njk
 ---
-{% from "macros.njk" import carte, articleCarte %}
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="tag">{{ site.slogan }}</span>
-      <h1>{{ site.nom }}<br><span>Le gaming, sans compromis.</span></h1>
-      <p class="lead">{{ site.accroche }}</p>
-      <div class="btns">
-        <a href="/boutique/" class="btn btn-dark">Voir la boutique →</a>
-        <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" class="btn btn-light">Nous écrire sur WhatsApp</a>
+{% from "macros.njk" import carte, articleCarte, icone %}
+{% set cats = collections.produits | categories %}
+{% set icCat = { "Consoles": "console", "Accessoires": "manette", "Jeux": "jeu", "Cartes cadeaux": "carte", "PC Gaming": "casque", "Occasion": "portable" } %}
+
+<section class="mk-hero">
+  <div class="wrap mk-hero-grid">
+    <aside class="mk-side">
+      <h3>Catégories</h3>
+      {% for c in cats %}
+      <a href="/boutique/?cat={{ c | urlencode }}"><span class="mk-side-ic">{{ icone(icCat[c] or "console") }}</span>{{ c }}<small>{{ collections.produits | compte(c) }}</small></a>
+      {% endfor %}
+      <a href="/boutique/?cat=promo" class="hot"><span class="mk-side-ic">🔥</span>Promos<small>{{ (collections.produits | promos).length }}</small></a>
+    </aside>
+
+    <div class="slider" id="slider">
+      {% for b in site.bannieres %}
+      <div class="slide s-{{ b.style or 'bleu' }} {{ 'on' if loop.first }}">
+        <div class="slide-txt">
+          {% if b.etiquette %}<span class="slide-tag">{{ b.etiquette }}</span>{% endif %}
+          <{{ 'h1' if loop.first else 'h2' }} class="slide-title">{{ b.titre }}</{{ 'h1' if loop.first else 'h2' }}>
+          <p>{{ b.texte }}</p>
+          <a href="{{ b.lien }}" class="btn btn-white">{{ b.bouton }} →</a>
+        </div>
+        {% if b.image %}<img src="{{ b.image }}" alt="" class="slide-img">{% else %}<img src="/assets/img/logo-white.png" alt="" class="slide-logo">{% endif %}
       </div>
-      <div class="stats">
-        {% for c in site.chiffres %}<div><b>{{ c.valeur }}</b><small>{{ c.texte }}</small></div>{% endfor %}
+      {% endfor %}
+      <div class="dots">{% for b in site.bannieres %}<button type="button" class="{{ 'on' if loop.first }}" aria-label="Bannière {{ loop.index }}"></button>{% endfor %}</div>
+    </div>
+
+    <div class="mk-right">
+      <div class="mk-welcome">
+        <img src="/assets/img/logo.png" alt="Logo {{ site.nom }}" width="64" height="64">
+        <div><b>Bienvenue chez {{ site.nom }}</b><small>{{ site.slogan }}</small></div>
       </div>
-    </div>
-    <div class="hero-visual">
-      <img src="/assets/img/logo.png" alt="Logo {{ site.nom }}" width="256" height="256" class="hero-logo">
-      <span class="float f1">🎮 Nouveautés chaque semaine</span>
-      <span class="float f2">✅ Produits garantis</span>
-    </div>
-  </div>
-</section>
-
-<section class="soft">
-  <div class="wrap">
-    <div class="head">
-      <div><h2>Produits du moment</h2><p class="sub">Ajoutez au panier, puis envoyez votre commande sur WhatsApp.</p></div>
-      <a href="/boutique/" class="btn btn-light">Tout voir →</a>
-    </div>
-    <div class="grid">
-      {% for p in collections.produits | limit(8) %}{{ carte(p, site) }}{% endfor %}
+      {% set promo = (collections.produits | promos)[0] %}
+      {% if promo %}
+      <a href="{{ promo.url }}" class="mk-deal">
+        <span class="badge promo">-{{ promo.data.prix | remise(promo.data.ancien_prix) }}%</span>
+        <div class="mk-deal-ic">{{ icone(promo.data.icone) }}</div>
+        <div><small>Offre du moment</small><b>{{ promo.data.title }}</b><span class="price">{{ promo.data.prix | prix(site.devise) }}</span></div>
+      </a>
+      {% endif %}
+      <a href="https://wa.me/{{ site.whatsapp }}" target="_blank" rel="noopener" class="mk-help">
+        <b>Besoin d'un conseil ?</b><small>Écrivez-nous sur WhatsApp, réponse rapide</small>
+      </a>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="head"><div><h2>Pourquoi choisir {{ site.nom }}</h2><p class="sub">Une boutique de passionnés, pour les passionnés.</p></div></div>
-    <div class="features">
-      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>100% authentique</h3><p>Uniquement des produits neufs et officiels, avec facture.</p></div>
-      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="14" height="10" rx="1"/><path d="M15 10h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><h3>Livraison rapide</h3><p>Livré chez vous en 24h à {{ site.ville }}, ou retrait en boutique.</p></div>
-      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Garantie & SAV</h3><p>Chaque console est garantie. On s'occupe de tout en cas de souci.</p></div>
-      <div class="feat"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.8 7L4 20l1-5A8 8 0 1 1 21 12z"/></svg></div><h3>Conseil personnalisé</h3><p>Une question ? On vous répond directement sur WhatsApp.</p></div>
-    </div>
-  </div>
+<section class="trust">
+  <div class="wrap"><div class="trust-grid">
+    <div><span>🚚</span><p><b>Livraison 24h</b><small>à {{ site.ville }}</small></p></div>
+    <div><span>✅</span><p><b>100% authentique</b><small>produits neufs garantis</small></p></div>
+    <div><span>📱</span><p><b>MyNita & Amana</b><small>ou paiement à la livraison</small></p></div>
+    <div><span>💬</span><p><b>Service client</b><small>7j/7 sur WhatsApp</small></p></div>
+  </div></div>
 </section>
 
-{% if collections.articles.length %}
-<section class="soft">
+{% set promos = collections.produits | promos %}
+{% if promos.length %}
+<section class="mk-sec">
   <div class="wrap">
-    <div class="head">
-      <div><h2>Actualités gaming</h2><p class="sub">Nouveautés, arrivages et conseils de l'équipe {{ site.nom }}.</p></div>
-      <a href="/blog/" class="btn btn-light">Tous les articles →</a>
+    <div class="mk-box flash">
+      <div class="mk-head">
+        <h2>🔥 Promos du moment</h2>
+        <a href="/boutique/?cat=promo">Tout voir →</a>
+      </div>
+      <div class="grid g5">{% for p in promos | limit(5) %}{{ carte(p, site) }}{% endfor %}</div>
     </div>
-    <div class="posts">{% for a in collections.articles | limit(3) %}{{ articleCarte(a) }}{% endfor %}</div>
   </div>
 </section>
 {% endif %}
 
-<section id="contact">
+<section class="mk-sec">
+  <div class="wrap">
+    <div class="mk-box">
+      <div class="mk-head"><h2>Acheter par catégorie</h2></div>
+      <div class="cat-tiles">
+        {% for c in cats %}
+        <a href="/boutique/?cat={{ c | urlencode }}" class="cat-tile"><span>{{ icone(icCat[c] or "console") }}</span><b>{{ c }}</b><small>{{ collections.produits | compte(c) }} produits</small></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% for c in cats %}
+{% set liste = collections.produits | parCategorie(c) %}
+<section class="mk-sec">
+  <div class="wrap">
+    <div class="mk-box">
+      <div class="mk-head">
+        <h2>{{ c }}</h2>
+        <a href="/boutique/?cat={{ c | urlencode }}">Voir tout ({{ liste.length }}) →</a>
+      </div>
+      <div class="grid g5">{% for p in liste | limit(5) %}{{ carte(p, site) }}{% endfor %}</div>
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+{% if site.marques.length %}
+<section class="mk-sec">
+  <div class="wrap">
+    <div class="mk-box">
+      <div class="mk-head"><h2>Nos marques</h2></div>
+      <div class="brands">{% for m in site.marques %}<a href="/recherche/?q={{ m | urlencode }}">{{ m }}</a>{% endfor %}</div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if collections.articles.length %}
+<section class="mk-sec">
+  <div class="wrap">
+    <div class="mk-box">
+      <div class="mk-head"><h2>Actualités gaming</h2><a href="/blog/">Tous les articles →</a></div>
+      <div class="posts">{% for a in collections.articles | limit(3) %}{{ articleCarte(a) }}{% endfor %}</div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section id="contact" class="mk-sec last">
   <div class="wrap about">
     <div>
       <h2>Venez nous rendre visite</h2>
-      <p class="tag" style="margin:14px 0 0">Ouvert 7j/7 · 9h – 21h</p>
+      <p class="tag" style="margin:14px 0 0">{{ site.horaires }}</p>
       <p class="sub">{{ site.presentation }}</p>
       <div class="btns" style="margin-top:28px">
         <a href="{{ site.lien_carte }}" target="_blank" rel="noopener" class="btn btn-dark">Voir l'itinéraire</a>

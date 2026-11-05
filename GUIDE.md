@@ -63,7 +63,7 @@ Allez sur `https://votre-site/admin/` et connectez-vous avec GitHub. Vous y trou
 |---|---|
 | **Produits** | Ajouter ou modifier un produit : nom, prix, prix barré pour une promo, photo, étiquette « Nouveau » ou « Promo », en stock ou en rupture, description |
 | **Articles (Actualités)** | Écrire des articles (arrivages, promos, conseils) avec images, titres, listes… |
-| **Paramètres de la boutique** | Numéro WhatsApp, adresse, horaires, slogan, réseaux sociaux, chiffres clés de l'accueil |
+| **Paramètres de la boutique** | Numéro WhatsApp, adresse, horaires, slogan, réseaux sociaux, **bannières du diaporama**, **numéros MyNita / Amana**, marques |
 
 Après chaque modification, cliquez sur **« Publier » → « Publier maintenant »**. Le site se met à jour tout seul en **1 à 2 minutes**.
 

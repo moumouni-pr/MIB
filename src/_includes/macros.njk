@@ -13,9 +13,10 @@
 {%- endmacro %}
 
 {% macro carte(p, site) -%}
-<article class="card" data-cat="{{ p.data.categorie }}">
+<article class="card" data-cat="{{ p.data.categorie }}" data-prix="{{ p.data.prix }}" data-remise="{{ p.data.prix | remise(p.data.ancien_prix) }}" data-ordre="{{ p.data.ordre }}">
   <a href="{{ p.url }}" class="thumb">
-    {% if p.data.badge %}<span class="badge {{ 'promo' if p.data.badge == 'Promo' }}">{{ p.data.badge }}</span>{% endif %}
+    {% set rm = p.data.prix | remise(p.data.ancien_prix) %}
+    {% if rm %}<span class="badge promo">-{{ rm }}%</span>{% elif p.data.badge %}<span class="badge">{{ p.data.badge }}</span>{% endif %}
     {% if p.data.en_stock == false %}<span class="badge out">Rupture</span>{% endif %}
     {{ visuel(p.data, p.data.title) }}
   </a>

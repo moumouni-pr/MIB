@@ -1,0 +1,23 @@
+---
+layout: base.njk
+title: Recherche
+description: Rechercher un produit chez MIB GAMING.
+permalink: /recherche/
+eleventyExcludeFromCollections: true
+---
+<section class="mk-sec first">
+  <div class="wrap">
+    <nav class="crumbs"><a href="/">Accueil</a> / <span>Recherche</span></nav>
+    <h1 class="shop-title" id="searchTitle">Recherche</h1>
+    <p class="sub" id="searchCount"></p>
+  </div>
+</section>
+<section class="mk-sec">
+  <div class="wrap">
+    <div class="grid g5" id="searchGrid"></div>
+    <div class="empty" id="searchEmpty" hidden>
+      <p>Aucun produit trouvé. Vous ne trouvez pas ce que vous cherchez ?</p>
+      <div class="btns" style="justify-content:center;margin-top:16px"><a class="btn btn-wa" id="searchWa" target="_blank" rel="noopener" href="#">Demandez-nous sur WhatsApp</a><a class="btn btn-light" href="/boutique/">Voir toute la boutique</a></div>
+    </div>
+  </div>
+</section>
