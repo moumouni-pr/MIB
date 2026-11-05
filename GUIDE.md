@@ -68,7 +68,7 @@ Allez sur `https://votre-site/admin/` et connectez-vous avec GitHub. Vous y trou
 Après chaque modification, cliquez sur **« Publier » → « Publier maintenant »**. Le site se met à jour tout seul en **1 à 2 minutes**.
 
 ### Conseils pour bien apparaître sur Google
-- **Résumé des produits et des articles** : écrivez une phrase claire avec des mots que les clients tapent sur Google, par exemple « PS5 Slim neuve à Bamako, livraison en 24h ».
+- **Résumé des produits et des articles** : écrivez une phrase claire avec des mots que les clients tapent sur Google, par exemple « PS5 Slim neuve à Niamey, livraison en 24h ».
 - **Photos** : utilisez de vraies photos de vos produits et de votre boutique, carrées de préférence.
 - **Articles** : un article par semaine ou toutes les deux semaines suffit, par exemple pour les arrivages, une comparaison de consoles, les jeux du mois ou les promos de fin d'année.
 

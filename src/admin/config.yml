@@ -88,7 +88,7 @@ collections:
           - { label: "Adresse du site (domaine)", name: url, widget: string, hint: "Ex : https://mibgaming.com — sans / à la fin" }
           - { label: "Ville", name: ville, widget: string }
           - { label: "Pays", name: pays, widget: string }
-          - { label: "Code pays (2 lettres)", name: code_pays, widget: string, hint: "ML = Mali, SN = Sénégal, CI = Côte d'Ivoire, BF = Burkina Faso…" }
+          - { label: "Code pays (2 lettres)", name: code_pays, widget: string, hint: "NE = Niger, ML = Mali, SN = Sénégal, CI = Côte d'Ivoire, BF = Burkina Faso…" }
           - { label: "Description pour Google (150 caractères env.)", name: description, widget: text }
           - { label: "Phrase d'accroche (page d'accueil)", name: accroche, widget: text }
           - { label: "Présentation de la boutique", name: presentation, widget: text }
