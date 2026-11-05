@@ -17,7 +17,7 @@
   <a href="{{ p.url }}" class="thumb">
     {% set rm = p.data.prix | remise(p.data.ancien_prix) %}
     {% if rm %}<span class="badge promo">-{{ rm }}%</span>{% elif p.data.badge %}<span class="badge">{{ p.data.badge }}</span>{% endif %}
-    {% if p.data.en_stock == false %}<span class="badge out">Rupture</span>{% endif %}
+    {% if p.data.en_stock == false %}<span class="badge out">Rupture</span>{% elif p.data.couleurs and p.data.couleurs.length > 1 %}<span class="badge out colors">{{ p.data.couleurs.length }} couleurs</span>{% endif %}
     {{ visuel(p.data, p.data.title) }}
   </a>
   <div class="body">

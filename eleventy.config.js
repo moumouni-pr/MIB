@@ -28,7 +28,7 @@ export default function (eleventyConfig) {
       id: p.fileSlug, nom: p.data.title, cat: p.data.categorie, prix: p.data.prix,
       ancien: p.data.ancien_prix || 0, badge: p.data.badge || "", image: p.data.image || "",
       icone: p.data.icone || "console", url: p.url, stock: p.data.en_stock !== false,
-      resume: p.data.resume || "", marque: p.data.marque || "",
+      resume: p.data.resume || "", marque: p.data.marque || "", couleurs: p.data.couleurs || [],
     })));
 
   eleventyConfig.addFilter("remise", (prix, ancien) => ancien && ancien > prix ? Math.round((1 - prix / ancien) * 100) : 0);

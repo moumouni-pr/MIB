@@ -41,6 +41,14 @@ collections:
         options: ["", Nouveau, Promo, Best-seller, "Stock limité"]
       - { label: "Photo principale", name: image, widget: image, required: false, hint: "Photo carrée de préférence, fond blanc ou clair." }
       - { label: "Autres photos (galerie)", name: galerie, widget: list, required: false, field: { label: Photo, name: photo, widget: image } }
+      - label: "Couleurs disponibles (optionnel)"
+        name: couleurs
+        widget: list
+        required: false
+        summary: "{{fields.nom}}"
+        fields:
+          - { label: "Nom de la couleur", name: nom, widget: string }
+          - { label: "Photo de cette couleur", name: image, widget: image, required: false }
       - label: "Icône (si pas de photo)"
         name: icone
         widget: select

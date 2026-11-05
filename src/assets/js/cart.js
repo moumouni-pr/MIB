@@ -4,7 +4,10 @@
   const $$ = (s) => Array.from(document.querySelectorAll(s));
   const fmt = (n) => Number(n).toLocaleString("fr-FR").replace(/[  ]/g, " ") + " " + B.devise;
   const waLink = (t) => `https://wa.me/${B.whatsapp}${t ? "?text=" + encodeURIComponent(t) : ""}`;
-  const byId = (id) => P.find((p) => p.id === id);
+  const byId = (key) => P.find((p) => p.id === String(key).split("|")[0]);
+  const variante = (key) => String(key).split("|")[1] || "";
+  const nomLigne = (key) => byId(key).nom + (variante(key) ? ` (${variante(key)})` : "");
+  const imgLigne = (key) => { const p = byId(key), v = (p.couleurs || []).find((c) => c.nom === variante(key)); return v && v.image ? { ...p, image: v.image } : p; };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const remise = (p) => (p.ancien && p.ancien > p.prix ? Math.round((1 - p.prix / p.ancien) * 100) : 0);
   const visuel = (p) => (p.image ? `<img src="${esc(p.image)}" alt="${esc(p.nom)}" loading="lazy">` : IC[p.icone] || IC.console || "");
@@ -26,9 +29,9 @@
       ? ids.map((id) => {
           const p = byId(id);
           return `<div class="item">
-            <a href="${p.url}" class="item-thumb">${visuel(p)}</a>
+            <a href="${p.url}" class="item-thumb">${visuel(imgLigne(id))}</a>
             <div class="item-info">
-              <b>${esc(p.nom)}</b><span>${fmt(p.prix)}</span>
+              <b>${esc(nomLigne(id))}</b><span>${fmt(p.prix)}</span>
               <div class="qty">
                 <button type="button" data-q="${id}" data-d="-1" aria-label="Moins">−</button><span>${cart[id]}</span><button type="button" data-q="${id}" data-d="1" aria-label="Plus">+</button>
                 <button type="button" class="rm" data-rm="${id}">Retirer</button>
@@ -47,7 +50,12 @@
     save(); render();
   });
 
-  window.addToCart = (id) => { const p = byId(id); if (!p) return; cart[id] = (cart[id] || 0) + 1; save(); render(); toast(`${p.nom} ajouté au panier`); };
+  window.addToCart = (id, couleur) => {
+    const p = byId(id); if (!p) return;
+    if (p.couleurs && p.couleurs.length && !couleur) { location.href = p.url; return; }
+    const key = couleur ? `${id}|${couleur}` : id;
+    cart[key] = (cart[key] || 0) + 1; save(); render(); toast(`${nomLigne(key)} ajouté au panier`);
+  };
   window.openCart = () => { $("#drawer").classList.add("open"); $("#overlay").classList.add("open"); };
   window.closeCart = () => { $("#drawer").classList.remove("open"); $("#overlay").classList.remove("open"); };
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeCart(); });
@@ -87,7 +95,7 @@
     e.preventDefault();
     const f = new FormData(e.target);
     const ids = Object.keys(cart).filter(byId);
-    const lignes = ids.map((id) => `• ${cart[id]} × ${byId(id).nom} — ${fmt(cart[id] * byId(id).prix)}`).join("\n");
+    const lignes = ids.map((id) => `• ${cart[id]} × ${nomLigne(id)} — ${fmt(cart[id] * byId(id).prix)}`).join("\n");
     let msg = `🛒 *Nouvelle commande ${ref} — ${B.nom}*\n\n${lignes}\n\n*Total : ${fmt(totalPanier())}*\n\n`;
     msg += `👤 Nom : ${f.get("nom")}\n📞 Tél : ${f.get("tel")}\n🚚 ${f.get("mode")}\n`;
     if (f.get("mode") === "Livraison") msg += `📍 Adresse : ${f.get("adresse")}\n`;
@@ -157,6 +165,17 @@
     $("#searchEmpty").hidden = res.length > 0;
     $("#searchWa").href = waLink(`Bonjour ${B.nom}, je cherche : ${q}`);
   }
+
+  /* ---------- Choix de la couleur ---------- */
+  const sw = $("#swatches");
+  if (sw) sw.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-couleur]"); if (!b) return;
+    sw.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
+    $("#couleurChoisie").textContent = b.dataset.couleur;
+    $("#btnAjout").dataset.couleur = b.dataset.couleur;
+    if (b.dataset.img && $("#mainPhoto")) $("#mainPhoto").src = b.dataset.img;
+    const wa = $("#btnWa"); if (wa) wa.href = wa.dataset.base + encodeURIComponent(" — couleur : " + b.dataset.couleur);
+  });
 
   /* ---------- Galerie produit ---------- */
   const thumbs = $("#thumbs");

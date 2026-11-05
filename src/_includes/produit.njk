@@ -43,9 +43,18 @@ layout: base.njk
         <div class="product-price">{{ prix | prix(site.devise) }}{% if ancien_prix %}<span class="old">{{ ancien_prix | prix(site.devise) }}</span>{% endif %}</div>
         <p class="stock {{ 'no' if en_stock == false }}">{{ 'En stock' if en_stock != false else 'Rupture de stock — contactez-nous' }}</p>
         <p class="sub">{{ resume }}</p>
+        {% if couleurs and couleurs.length %}
+        <div class="variants">
+          <p>Couleur : <b id="couleurChoisie">{{ couleurs[0].nom }}</b></p>
+          <div class="swatches" id="swatches">
+            {% for c in couleurs %}<button type="button" class="{{ 'on' if loop.first }}" data-couleur="{{ c.nom }}" data-img="{{ c.image }}" title="{{ c.nom }}">{% if c.image %}<img src="{{ c.image }}" alt="{{ title }} {{ c.nom }}" loading="lazy">{% endif %}<span>{{ c.nom }}</span></button>{% endfor %}
+          </div>
+        </div>
+        {% endif %}
         <div class="btns" style="margin:24px 0">
-          {% if en_stock != false %}<button type="button" class="btn btn-dark" onclick="addToCart('{{ page.fileSlug }}'); openCart()">Ajouter au panier</button>{% endif %}
-          <a class="btn btn-wa" target="_blank" rel="noopener" href="https://wa.me/{{ site.whatsapp }}?text={{ ('Bonjour ' + site.nom + ', je suis intéressé(e) par : ' + title + ' (' + (prix | prix(site.devise)) + ')') | urlencode }}">Commander sur WhatsApp</a>
+          {% if en_stock != false %}<button type="button" class="btn btn-dark" id="btnAjout" {% if couleurs and couleurs.length %}data-couleur="{{ couleurs[0].nom }}"{% endif %} onclick="addToCart('{{ page.fileSlug }}', this.dataset.couleur); openCart()">Ajouter au panier</button>{% endif %}
+          {% set waBase %}https://wa.me/{{ site.whatsapp }}?text={{ ('Bonjour ' + site.nom + ', je suis intéressé(e) par : ' + title + ' (' + (prix | prix(site.devise)) + ')') | urlencode }}{% endset %}
+          <a class="btn btn-wa" id="btnWa" target="_blank" rel="noopener" data-base="{{ waBase }}" href="{{ waBase }}{% if couleurs and couleurs.length %}{{ (' — couleur : ' + couleurs[0].nom) | urlencode }}{% endif %}">Commander sur WhatsApp</a>
         </div>
         <div class="prose">{{ content | safe }}</div>
       </div>
